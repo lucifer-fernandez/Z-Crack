@@ -4,19 +4,21 @@ import os
 import time
 from termcolor import colored
 
-# ASCII ব্যানার
-BANNER = """
-\033[1;31m
-          ████████          ██████  ██████    █████   ██████  ██     ██   ███████ ███████ ███████ ██     
-               ███           ██      ██   ██   ██  ██   ██       ██   ██        ██   ██    ██ ██    ██ ██    
-             ███    ████    ██      ██████    ██████  ██       ██████         ██   ██    ██ ██    ██ ██     
-           ███               ██      ██  ██    ██   ██  ██       ██   ██        ██   ██    ██ ██    ██ ██     
-         ████████           ██████ ██    ██  ██   ██  ██████  ██      ██      ██   ███████ ███████  ███████
-          
-                                                                                                           
-\033[1;33m                    Created by Rayhan
-\033[0m
-"""
+# ব্যানার তৈরি করা (figlet এবং lolcat ব্যবহার)
+def display_banner():
+    try:
+        # Z-Crack Tool বড় আকারে
+        os.system("figlet 'Z-Crack Tool' | lolcat")
+        # Created by Rayhan ছোট ফন্টে (mini)
+        os.system("figlet -f mini 'Created by Rayhan' | lolcat")
+        # চিকন লম্বা লাইন
+        print(colored("-" * 60, "white"))
+    except Exception as e:
+        print(colored("[!] Error displaying banner. Ensure figlet and lolcat are installed using 'pkg install figlet lolcat'.", "red"))
+        print(colored("Falling back to plain text:", "yellow"))
+        print("Z-Crack Tool")
+        print("Created by Rayhan")
+        print("-" * 60)
 
 # ডিফল্ট ওয়ার্ডলিস্ট পাথ (রিপোজিটরিতে থাকবে)
 DEFAULT_WORDLIST = os.path.join(os.path.dirname(__file__), "passwords.txt")
@@ -52,10 +54,11 @@ def crack_zip(file, wordlist):
     return False
 
 def main():
-    print(BANNER)
+    display_banner()
     check_requirements()
     
-    # ইন্টারেক্টিভ ইনপুট
+    # ইন্টারেক্টিভ ইনপুট (নিচে সরানো)
+    print("\n" * 2)  # দুটি নতুন লাইন যোগ করে নিচে সরানো
     print(colored("Enter the path to the ZIP file (e.g., /sdcard/file.zip):", "cyan"))
     file = input().strip()
     
