@@ -8,7 +8,7 @@ from termcolor import colored
 def display_banner():
     try:
         # Z-Crack Tool বড় আকারে
-        os.system("figlet 'Z-Crack Tool' | lolcat")
+        os.system("figlet 'Z - Crack Tool' | lolcat")
         # Created by Rayhan ছোট ফন্টে (mini)
         os.system("figlet -f mini 'Created by Rayhan' | lolcat")
         # চিকন লম্বা লাইন
