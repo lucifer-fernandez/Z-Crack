@@ -7,11 +7,11 @@ from termcolor import colored
 # ASCII ব্যানার
 BANNER = """
 \033[1;31m
-            ███████   ██  ██████      ██████  ██████    █████   ██████  ██    ██    ███████  ██████   ███████    ██     
-               ███    ██  ██   ██      ██      ██   ██   ██  ██   ██      ██   ██        ██     ██    ██  ██    ██   ██    
-             ███     ██  ██████       ██      ██████   ███████  ██      █████          ██     ██    ██  ██    ██   ██     
-           ███      ██   ██           ██      ██  ██    ██   ██  ██      ██   ██        ██     ██    ██  ██    ██   ██     
-          ███████  ██   ██           ██████ ██    ██  ██   ██  ██████ ██     ██      ██     ███████   ███████   ███████
+          ████████          ██████  ██████    █████   ██████  ██     ██   ███████ ███████ ███████ ██     
+               ███           ██      ██   ██   ██  ██   ██       ██   ██        ██   ██    ██ ██    ██ ██    
+             ███    ████    ██      ██████    ██████  ██       ██████         ██   ██    ██ ██    ██ ██     
+           ███               ██      ██  ██    ██   ██  ██       ██   ██        ██   ██    ██ ██    ██ ██     
+         ████████           ██████ ██    ██  ██   ██  ██████  ██      ██      ██   ███████ ███████  ███████
           
                                                                                                            
 \033[1;33m                    Created by Rayhan
@@ -22,21 +22,12 @@ BANNER = """
 DEFAULT_WORDLIST = os.path.join(os.path.dirname(__file__), "passwords.txt")
 
 def check_requirements():
-    """Termux-এ প্রয়োজনীয় টুল চেক করা"""
-    required_tools = ["unrar", "7z"]
-    missing_tools = []
-    for tool in required_tools:
-        if os.system(f"which {tool} > /dev/null 2>&1") != 0:
-            missing_tools.append(tool)
-    if missing_tools:
-        print(colored(f"[!] Missing tools: {', '.join(missing_tools)}. Install them using:", "red"))
-        print(colored("pkg install unrar p7zip", "yellow"))
-        sys.exit(1)
+    """Termux-এ প্রয়োজনীয় প্যাকেজ চেক করা"""
     try:
-        import pyzipper, pikepdf, termcolor
+        import pyzipper, termcolor
     except ImportError as e:
         print(colored(f"[!] Missing Python library: {str(e).split()[-1]}", "red"))
-        print(colored("Install it using: pip install pyzipper pikepdf termcolor", "yellow"))
+        print(colored("Install it using: pip install pyzipper termcolor", "yellow"))
         sys.exit(1)
 
 def get_file_size(file_path):
@@ -60,54 +51,22 @@ def crack_zip(file, wordlist):
     print(colored("[-] Password not found in wordlist.", "red"))
     return False
 
-def crack_rar(file, wordlist):
-    total = get_file_size(wordlist)
-    for i, pwd in enumerate(open(wordlist, "r", errors="ignore"), 1):
-        cmd = f'unrar x -p"{pwd.strip()}" "{file}" > /dev/null 2>&1'
-        if os.system(cmd) == 0:
-            print(colored(f"[+] RAR Password Found: {pwd.strip()}", "green"))
-            return True
-        else:
-            print(colored(f"[-] RAR Trying ({i}/{total}): {pwd.strip()}", "yellow"))
-    print(colored("[-] Password not found in wordlist.", "red"))
-    return False
-
-def crack_7z(file, wordlist):
-    total = get_file_size(wordlist)
-    for i, pwd in enumerate(open(wordlist, "r", errors="ignore"), 1):
-        cmd = f'7z x -p"{pwd.strip()}" "{file}" -oextracted > /dev/null 2>&1'
-        if os.system(cmd) == 0:
-            print(colored(f"[+] 7Z Password Found: {pwd.strip()}", "green"))
-            return True
-        else:
-            print(colored(f"[-] 7Z Trying ({i}/{total}): {pwd.strip()}", "yellow"))
-    print(colored("[-] Password not found in wordlist.", "red"))
-    return False
-
-def crack_pdf(file, wordlist):
-    import pikepdf
-    total = get_file_size(wordlist)
-    for i, pwd in enumerate(open(wordlist, "r", errors="ignore"), 1):
-        try:
-            pikepdf.open(file, password=pwd.strip())
-            print(colored(f"[+] PDF Password Found: {pwd.strip()}", "green"))
-            return True
-        except:
-            print(colored(f"[-] PDF Trying ({i}/{total}): {pwd.strip()}", "yellow"))
-    print(colored("[-] Password not found in wordlist.", "red"))
-    return False
-
 def main():
     print(BANNER)
     check_requirements()
     
     # ইন্টারেক্টিভ ইনপুট
-    print(colored("Enter the path to the file (e.g., /sdcard/file.zip, document.pdf):", "cyan"))
+    print(colored("Enter the path to the ZIP file (e.g., /sdcard/file.zip):", "cyan"))
     file = input().strip()
     
     # ফাইল চেক
     if not os.path.exists(file):
         print(colored(f"[!] File not found: {file}", "red"))
+        sys.exit(1)
+    
+    # ফাইল টাইপ চেক
+    if not file.endswith(".zip"):
+        print(colored("[-] Unsupported file type! Only .zip files are supported.", "red"))
         sys.exit(1)
     
     # ওয়ার্ডলিস্ট নির্বাচন
@@ -130,18 +89,8 @@ def main():
     print(colored(f"[*] Starting password cracking for {file}...", "blue"))
     start_time = time.time()
 
-    # ফাইল টাইপ অনুযায়ী ক্র্যাকিং
-    if file.endswith(".zip"):
-        crack_zip(file, wordlist)
-    elif file.endswith(".rar"):
-        crack_rar(file, wordlist)
-    elif file.endswith(".7z"):
-        crack_7z(file, wordlist)
-    elif file.endswith(".pdf"):
-        crack_pdf(file, wordlist)
-    else:
-        print(colored("[-] Unsupported file type! Supported types: .zip, .rar, .7z, .pdf", "red"))
-        sys.exit(1)
+    # ZIP ফাইল ক্র্যাকিং
+    crack_zip(file, wordlist)
 
     print(colored(f"[*] Time taken: {time.time() - start_time:.2f} seconds", "blue"))
 
