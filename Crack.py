@@ -33,10 +33,10 @@ def check_requirements():
         print(colored("pkg install unrar p7zip", "yellow"))
         sys.exit(1)
     try:
-        import pyzipper, pikepdf, msoffcrypto
+        import pyzipper, pikepdf, termcolor
     except ImportError as e:
         print(colored(f"[!] Missing Python library: {str(e).split()[-1]}", "red"))
-        print(colored("Install it using: pip install pyzipper pikepdf msoffcrypto-tools termcolor", "yellow"))
+        print(colored("Install it using: pip install pyzipper pikepdf termcolor", "yellow"))
         sys.exit(1)
 
 def get_file_size(file_path):
@@ -97,22 +97,6 @@ def crack_pdf(file, wordlist):
     print(colored("[-] Password not found in wordlist.", "red"))
     return False
 
-def crack_docx(file, wordlist):
-    import msoffcrypto
-    import io
-    total = get_file_size(wordlist)
-    for i, pwd in enumerate(open(wordlist, "r", errors="ignore"), 1):
-        try:
-            office_file = msoffcrypto.OfficeFile(open(file, "rb"))
-            office_file.load_key(password=pwd.strip())
-            office_file.decrypt(io.BytesIO())
-            print(colored(f"[+] DOCX/XLSX Password Found: {pwd.strip()}", "green"))
-            return True
-        except:
-            print(colored(f"[-] DOCX/XLSX Trying ({i}/{total}): {pwd.strip()}", "yellow"))
-    print(colored("[-] Password not found in wordlist.", "red"))
-    return False
-
 def main():
     print(BANNER)
     check_requirements()
@@ -155,10 +139,8 @@ def main():
         crack_7z(file, wordlist)
     elif file.endswith(".pdf"):
         crack_pdf(file, wordlist)
-    elif file.endswith(".docx") or file.endswith(".xlsx"):
-        crack_docx(file, wordlist)
     else:
-        print(colored("[-] Unsupported file type!", "red"))
+        print(colored("[-] Unsupported file type! Supported types: .zip, .rar, .7z, .pdf", "red"))
         sys.exit(1)
 
     print(colored(f"[*] Time taken: {time.time() - start_time:.2f} seconds", "blue"))
