@@ -6,19 +6,21 @@ from termcolor import colored
 
 # ব্যানার তৈরি করা (figlet এবং lolcat ব্যবহার)
 def display_banner():
+    # স্ক্রিন ক্লিয়ার করা
+    os.system("clear")
     try:
         # Z-Crack Tool বড় আকারে
-        os.system("figlet 'Z - Crack Tool' | lolcat")
+        os.system("figlet 'Z-Crack Tool' | lolcat")
         # Created by Rayhan ছোট ফন্টে (mini)
         os.system("figlet -f mini 'Created by Rayhan' | lolcat")
         # চিকন লম্বা লাইন
-        print(colored("-" * 60, "white"))
+        print(colored("-" * 50, "white"))
     except Exception as e:
         print(colored("[!] Error displaying banner. Ensure figlet and lolcat are installed using 'pkg install figlet lolcat'.", "red"))
         print(colored("Falling back to plain text:", "yellow"))
         print("Z-Crack Tool")
         print("Created by Rayhan")
-        print("-" * 60)
+        print("-" * 50)
 
 # ডিফল্ট ওয়ার্ডলিস্ট পাথ (রিপোজিটরিতে থাকবে)
 DEFAULT_WORDLIST = os.path.join(os.path.dirname(__file__), "passwords.txt")
