@@ -41,7 +41,7 @@ pkg update && pkg upgrade -y
 
 ## 3️⃣ Install Required Packages:
 ```bash
-pkg install python figlet lolcat -y
+pkg install git python figlet lolcat -y
 pip install --upgrade pip
 pip install pyzipper termcolor
 ```
