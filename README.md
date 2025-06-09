@@ -16,6 +16,10 @@ Welcome to **Z-Crack**, a sleek and powerful Python-based utility crafted by **R
 ---
 
 ## 🎮 Demo Preview
+### Input Screen
+![Input Screen](https://i.postimg.cc/mkSdHGpJ/Screenshot-20250610-013336-1.jpg)
+### Output Screen
+![Output Screen](https://i.postimg.cc/DyT0fKTF/Screenshot-20250610-013115-1.jpg)
 
 Z-Crack Created by Rayhan
 
