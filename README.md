@@ -1,136 +1,79 @@
-# 🌟 Z-Crack - Unlock Your ZIP Files! 🔓
+# 🔐 Z-Crack Tool
 
-Welcome to **Z-Crack**, a sleek and powerful Python-based utility crafted by **Rayhan** to help you recover passwords from encrypted ZIP files. Whether you're an ethical hacker, digital forensics expert, or a curious learner — this tool is designed for **you**!
----
-
-## 🚀 Features
-
-✅ **ZIP Password Cracking** – Unlock encrypted ZIP files with ease  
-🎨 **Colorful Terminal Banner** – Uses `figlet` and `lolcat` for stylish command-line visuals  
-📂 **Built-in Wordlist** – Default `passwords.txt` for quick testing  
-📁 **Custom Wordlist Support** – Load your own wordlist for extended cracking  
-🖥️ **Interactive CLI** – Simple and intuitive input prompts, Termux-friendly  
-📊 **Live Progress Output** – Colored feedback using `termcolor`  
-📱 **Mobile Optimized** – Lightweight and ideal for Termux on Android devices
+**Z-Crack** is a lightweight and powerful ZIP password brute-force cracking tool written in Python. It’s optimized especially for Android Termux users.
 
 ---
 
-## 🎮 Demo Preview
-### Input Screen
-![Input Screen](https://i.postimg.cc/mkSdHGpJ/Screenshot-20250610-013336-1.jpg)
-### Output Screen
-![Output Screen](https://i.postimg.cc/DyT0fKTF/Screenshot-20250610-013115-1.jpg)
+## ✨ Features
 
-Z-Crack Created by Rayhan
-
-Enter the path to the ZIP file (e.g., /sdcard/file.zip):
-
-> 🔍 Sit back and watch Z-Crack find the password — with real-time colorful output and time taken!
+- 🔓 Brute-force crack password-protected `.zip` files
+- 📂 Supports both default and custom wordlists
+- 🖥️ Colorful terminal interface
+- ⏱️ Displays total execution time
 
 ---
 
-## 📦 Installation Guide
+## 📲 Installation & Usage (Termux)
 
-Follow these steps to set up Z-Crack Tool in **Termux**:
+Follow these steps to install and run the tool on **Termux**:
 
-### 1️⃣ Grant Storage Permission:
+### 1. ✅ Install Git & Python
 ```bash
-termux-setup-storage
+pkg update && pkg upgrade
+pkg install git python -y
 ```
-
-## 2️⃣ Update Your System:
-```bash
-pkg update && pkg upgrade -y
-```
-
-## 3️⃣ Install Required Packages:
-```bash
-pkg install git python figlet lolcat -y
-pip install --upgrade pip
-pip install pyzipper termcolor
-```
-
-## 4️⃣ Clone the Repository:
+2. ✅ Clone the repository
 ```bash
 git clone https://github.com/lucifer-fernandez/Z-Crack.git
+```
+3. ✅ Navigate to the project folder
+```bash
 cd Z-Crack
 ```
-
-## 5️⃣ Make Script Executable:
+4. ✅ Run the script
 ```bash
-chmod +x crack.py
+python crack.py
 ```
 
 ---
 
-## ▶️ Usage
-```bash
-./crack.py
-```
+📁 Default Wordlist
 
-Then follow the prompts:
-
-1. Enter the path to your ZIP file (e.g., /sdcard/file.zip)
+The project includes a default wordlist named passwords.txt. You can also use your own custom wordlist by choosing the option during runtime.
 
 
-2. Choose to use default wordlist (passwords.txt) or provide your own
+---
 
+🛠 Requirements
 
-3. Sit back and let the cracking begin!
+Python 3
 
+zipfile (built-in Python module — no need to install anything extra)
 
 
 
 ---
 
-## ⚠️ Disclaimer
+👤 Author
 
-> Z-Crack Tool is intended for educational and legal use only.
-Using this tool on files you don't own or without permission is illegal and unethical.
+Name     : Mohammad Rayhan Khan
 
+Facebook : facebook.com/azad.farabi.2024
 
-
-Respect privacy, security laws, and use this tool responsibly.
-
-
----
-
-## 📜 License
-
-Z-Crack Tool is released under the MIT License.
-For more information see the LICENCE file.
-
-
----
-
-## 🤝 Contributing
-
-Want to improve the tool? Found a bug?
-Feel free to fork, star, and pull request! Contributions are highly appreciated.
-
-
----
-
-## 🙌 Acknowledgements
-
-Rayhan – Creator & Developer
-
-figlet + lolcat – For beautiful banners
-
-pyzipper + termcolor – For core functionality
+GitHub   : github.com/lucifer-fernandez
 
 
 
 ---
 
-## 🌐 Support
+⚠️ Disclaimer
 
-For queries, suggestions, or collaboration:
+This tool is intended for educational purposes only. Do not use it to access files without permission. Unauthorized access or hacking is illegal.
 
-📬 Email: rayhankhan4u@gmail.com
-📁 GitHub Issues: Submit a bug or feature request
 
 
 ---
 
-> 🔐 Happy cracking — and always stay ethical!
+📌 License
+
+This project is open-source and available under the MIT License.
